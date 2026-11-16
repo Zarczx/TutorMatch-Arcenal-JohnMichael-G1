@@ -3,11 +3,11 @@
 {% with page=request.resolver_match.url_name %}
 <div class="app">
   <nav class="side" aria-label="Main">
-    <a class="logo" href="{% url 'landing' %}"><img src="{% static 'img/head.png' %}" alt="">TutorMatch</a>
+    <a class="logo" href="{% url 'landing' %}">{% if user.photo %}<img class="side-avatar" src="{{ user.photo.url }}" alt="Your profile photo">{% else %}<img src="{% static 'img/head.png' %}" alt="">{% endif %}<span>TutorMatch</span></a>
     <a href="{% url 'dashboard' %}" class="{% if page == 'student_dashboard' or page == 'tutor_dashboard' %}on{% endif %}">Dashboard</a>
     <a href="{% url 'profile' %}" class="{% if page == 'profile' or page == 'profile_edit' %}on{% endif %}">My profile</a>
     <form method="post" action="{% url 'logout' %}">{% csrf_token %}<button class="lo" type="submit">Log out</button></form>
-    <div class="who"><b>{{ user.full_name }}</b><span class="pill">{{ user.role }}</span></div>
+    <div class="who"><b>{{ user.full_name }}</b><span class="pill">{{ user.get_role_display }}</span></div>
   </nav>
   <main class="main">{% include 'partials/messages.html' %}{% block content %}{% endblock %}</main>
 </div>

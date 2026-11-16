@@ -1,14 +1,35 @@
 {% extends 'accounts/app_base.html' %}
+{% load static %}
 {% block title %}My profile · TutorMatch{% endblock %}
 {% block content %}
-<h1>My profile</h1>
-<div class="phead">{% if user.photo %}<img class="avatar" src="{{ user.photo.url }}" alt="Your profile photo">{% else %}<div class="avatar" aria-hidden="true">{{ user.initials }}</div>{% endif %}
-  <div><h2>{{ user.full_name }}</h2><span class="pill">{{ user.role }}</span></div></div>
-<div class="panel"><dl class="kv">
-  <dt>Username</dt><dd>{{ user.username }}</dd><dt>Email</dt><dd>{{ user.email }}</dd>
-  <dt>Contact number</dt><dd>{{ user.phone|default:"Not set" }}</dd>
-  {% if user.role == 'tutor' %}<dt>Subjects</dt><dd>{{ user.subjects|default:"Not set" }}</dd><dt>Rate per hour</dt><dd>{% if user.hourly_rate %}₱{{ user.hourly_rate }}{% else %}Not set{% endif %}</dd>{% endif %}
-  <dt>Bio</dt><dd>{{ user.bio|default:"Not set" }}</dd></dl>
-  <a class="btn sm" href="{% url 'profile_edit' %}" style="margin-top:18px">Edit profile</a>
-  <div class="note">You can only view and edit your own profile.</div></div>
+<div class="page-top">
+  <div>
+    <h1>My profile</h1>
+    
+  </div>
+  
+</div>
+
+
+<div class="profile-card">
+  <div class="profile-head">
+    {% if user.photo %}<img class="avatar" src="{{ user.photo.url }}" alt="Your profile photo">{% else %}<div class="avatar" aria-hidden="true">{{ user.initials }}</div>{% endif %}
+    <div>
+      <h2>{{ user.full_name }}</h2>
+      <span class="pill">{{ user.get_role_display }}</span>
+    </div>
+    <a class="btn sm profile-edit" href="{% url 'profile_edit' %}">Edit profile</a>
+  </div>
+
+  <dl class="profile-grid">
+    <div><dt>Username</dt><dd>{{ user.username }}</dd></div>
+    <div><dt>Email</dt><dd>{{ user.email }}</dd></div>
+    <div><dt>Contact number</dt><dd>{{ user.phone|default:"Not set" }}</dd></div>
+    {% if user.role == 'tutor' %}
+    <div><dt>Subjects</dt><dd>{{ user.subjects|default:"Not set" }}</dd></div>
+    <div><dt>Rate per hour</dt><dd>{% if user.hourly_rate %}₱{{ user.hourly_rate }}{% else %}Not set{% endif %}</dd></div>
+    {% endif %}
+    <div class="wide"><dt>Bio</dt><dd>{{ user.bio|default:"Not set" }}</dd></div>
+  </dl>
+</div>
 {% endblock %}

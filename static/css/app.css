@@ -102,3 +102,40 @@ input[type=file]{padding:9px}
 img.avatar{object-fit:cover}
 .roles ul{display:contents;list-style:none;margin:0;padding:0}.roles li{display:block}
 .err403 a{display:inline-block;margin-top:10px;border:1.5px solid var(--line);border-radius:10px;padding:9px 16px}
+/* Login and register layout */
+.auth{grid-template-columns:1fr 1fr;align-items:stretch;overflow-x:hidden}
+.auth>*{min-width:0}
+.board{justify-content:center;padding-top:40px}
+.mid{margin-top:0}
+.formside{align-content:center}
+.box{margin-top:0}
+/* Pin the logo to the top-left corner of the auth pages */
+.board{position:relative}
+.board .logo{position:absolute;top:28px;left:32px;margin:0;z-index:2}
+/* Profile page */
+.profile-card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:32px;max-width:860px;box-shadow:0 14px 34px rgba(15,42,53,.1)}
+.profile-head{display:flex;align-items:center;gap:20px;padding-bottom:24px;margin-bottom:24px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.profile-head h2{font-size:26px;margin-bottom:6px}
+.profile-head .avatar{width:88px;height:88px;flex-shrink:0}
+.profile-edit{margin-left:auto}
+.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px 32px;margin:0}
+.profile-grid>div{min-width:0}
+.profile-grid .wide{grid-column:1/-1}
+.profile-grid dt{font-size:13px;font-weight:700;letter-spacing:.02em;color:var(--mut);margin-bottom:4px}
+.profile-grid dd{margin:0;font-size:16px;color:var(--ink);overflow-wrap:anywhere}
+@media (max-width:640px){.profile-grid{grid-template-columns:1fr}.profile-edit{margin-left:0}}
+/* Logout: lighter red so it's not clicked by accident */
+.side .lo{color:#ff9e9e}
+.side .lo:hover{background:#4a1f1f;color:#ffd0d0}
+
+/* Push Edit profile to the far right of the card header */
+.profile-head .profile-edit{margin-left:auto}
+
+.page-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+.brand-mini{display:flex;align-items:center;gap:10px;font:800 18px 'Bricolage Grotesque',sans-serif;color:var(--ink);text-decoration:none}
+.brand-mini img{width:36px;height:36px;border-radius:50%;background:#aee1d1;object-fit:contain}
+
+/* Sidebar logo: text beside the image, and profile photo option */
+.side .logo{display:flex;align-items:center;gap:10px;padding:0;margin:0 8px 22px;background:none;font:800 20px 'Bricolage Grotesque',sans-serif;color:#fff}
+.side .logo:hover{background:none}
+.side .logo img{width:40px;height:40px;border-radius:50%;background:#aee1d1;object-fit:cover;flex-shrink:0}

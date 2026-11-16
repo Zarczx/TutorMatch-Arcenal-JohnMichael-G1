@@ -1,0 +1,6 @@
+{% extends 'accounts/app_base.html' %}
+{% block title %}Not available · TutorMatch{% endblock %}
+{% block content %}
+<div class="err403"><h1>403</h1><h2>This page isn’t available for your role</h2>
+<p class="sub">You’re logged in as a {{ user.role }}. Go back to your own dashboard.</p><a href="{% url 'dashboard' %}">Open my dashboard</a></div>
+{% endblock %}

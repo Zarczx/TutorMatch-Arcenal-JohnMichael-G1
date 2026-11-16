@@ -1,0 +1,14 @@
+{% extends 'accounts/app_base.html' %}
+{% block title %}Edit profile · TutorMatch{% endblock %}
+{% block content %}
+<h1>Edit profile</h1>
+<form method="post" enctype="multipart/form-data" class="panel" style="margin-top:20px" novalidate>{% csrf_token %}
+  <div class="row"><div>{% include 'partials/field.html' with f=form.first_name %}</div><div>{% include 'partials/field.html' with f=form.last_name %}</div></div>
+  {% include 'partials/field.html' with f=form.email %}
+  {% include 'partials/field.html' with f=form.phone %}
+  {% if form.subjects %}{% include 'partials/field.html' with f=form.subjects %}{% include 'partials/field.html' with f=form.hourly_rate %}{% endif %}
+  {% include 'partials/field.html' with f=form.bio %}
+  {% include 'partials/field.html' with f=form.photo %}
+  <div style="display:flex;gap:10px;margin-top:20px"><button class="btn sm" type="submit">Save changes</button><a class="btn ghost" href="{% url 'profile' %}">Cancel</a></div>
+</form>
+{% endblock %}

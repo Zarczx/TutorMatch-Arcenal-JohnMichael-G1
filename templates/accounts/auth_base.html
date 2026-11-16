@@ -1,0 +1,18 @@
+{% extends 'base.html' %}{% load static %}
+{% block body %}
+<div class="auth">
+  <section class="board">
+    <a class="logo" href="{% url 'landing' %}"><img src="{% static 'img/head.png' %}" alt="">TutorMatch</a>
+    <div class="mid">
+      <div class="ostage"><span class="chip c1">★ 4.9 rating</span><span class="chip c2">Understanding 4 → 8</span>
+        <img class="owl" src="{% static 'img/owl.png' %}" alt="TutorMatch owl mascot"><div class="gnd"></div></div>
+      <h1>Find a tutor. See your progress.</h1>
+      <p>Peer tutoring at CIT-U, in one place: pick a subject, book a session, and track how much you’ve improved.</p>
+    </div>
+  </section>
+  <section class="formside">
+    <a class="back" href="{% url 'landing' %}">← Back to home</a>
+    <div class="box">{% block content %}{% endblock %}</div>
+  </section>
+</div>
+{% endblock %}

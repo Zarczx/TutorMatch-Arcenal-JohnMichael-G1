@@ -1,0 +1,13 @@
+{% extends 'accounts/auth_base.html' %}
+{% block title %}Log in · TutorMatch{% endblock %}
+{% block content %}
+<h2>Welcome back</h2><p class="sub">Log in to book sessions or manage your bookings.</p>
+{% include 'partials/messages.html' %}
+<form method="post" novalidate>{% csrf_token %}
+  <input type="hidden" name="next" value="{{ next }}">
+  {% include 'partials/field.html' with f=form.username %}
+  {% include 'partials/field.html' with f=form.password %}
+  <button class="btn" type="submit">Log in</button>
+</form>
+<p class="swap">New to TutorMatch? <a href="{% url 'register' %}">Create an account</a></p>
+{% endblock %}

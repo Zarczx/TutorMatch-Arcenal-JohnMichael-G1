@@ -1,0 +1,17 @@
+{% extends 'accounts/auth_base.html' %}
+{% block title %}Create account · TutorMatch{% endblock %}
+{% block content %}
+<h2>Create your account</h2><p class="sub">Choose how you’ll use TutorMatch.</p>
+{% include 'partials/messages.html' %}
+<form method="post" novalidate>{% csrf_token %}
+  <div class="roles">
+    {% for radio in form.role %}{{ radio.tag }}<label for="{{ radio.id_for_label }}"><b>{{ radio.choice_label }}</b><span>{% if radio.data.value == 'tutor' %}Offer sessions{% else %}Find and book tutors{% endif %}</span></label>{% endfor %}
+  </div>
+  <div class="row"><div>{% include 'partials/field.html' with f=form.first_name %}</div><div>{% include 'partials/field.html' with f=form.last_name %}</div></div>
+  {% include 'partials/field.html' with f=form.username %}
+  {% include 'partials/field.html' with f=form.email %}
+  <div class="row"><div>{% include 'partials/field.html' with f=form.password1 %}</div><div>{% include 'partials/field.html' with f=form.password2 %}</div></div>
+  <button class="btn" type="submit">Create account</button>
+</form>
+<p class="swap">Already registered? <a href="{% url 'login' %}">Log in</a></p>
+{% endblock %}

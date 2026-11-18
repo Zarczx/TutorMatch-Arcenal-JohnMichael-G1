@@ -1,10 +1,9 @@
-{% extends 'accounts/app_base.html' %}
+{% extends 'accounts/app_base.html' %}{% load booking_tags %}
 {% block title %}Tutor dashboard · TutorMatch{% endblock %}
 {% block content %}
-<h1>Hi, {{ user.first_name|default:user.username }}</h1><p class="sub">Your bookings and tutor profile.</p>
-<div class="stats"><div class="stat"><b>3</b><span>Booking requests</span></div><div class="stat"><b>4.8</b><span>Average rating</span></div><div class="stat"><b>12</b><span>Sessions logged</span></div></div>
-<div class="panel"><h3>Booking requests</h3>
-<div class="item"><div>Maria S. – Data Structures<small>Sat, Jan 23 · 2:00 PM</small></div><span><button class="btn sm" type="button">Confirm</button></span></div>
-<div class="item"><div>Juan D. – Programming 1<small>Tue, Jan 26 · 10:00 AM</small></div><span><button class="btn sm" type="button">Confirm</button></span></div></div>
-<div class="panel"><h3>Your subjects</h3><p style="margin:0">{{ user.subjects|default:"Add subjects in your profile." }}</p></div>
+<h1>Hi, {{ user.first_name|default:user.username }}</h1><p class="sub">Your booking requests and sessions.</p>
+{% booking_summary %}
+<div class="panel"><h3>Your subjects</h3>
+  <p style="margin:0 0 14px">{% for s in user.teaches.all %}<span class="pill">{{ s.name }}</span> {% empty %}You haven’t chosen any subjects yet.{% endfor %}</p>
+  <a class="btn sm" href="{% url 'my_subjects' %}">Edit my subjects</a></div>
 {% endblock %}

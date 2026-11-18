@@ -1,0 +1,16 @@
+{% extends 'accounts/app_base.html' %}{% load static %}
+{% block title %}{{ heading }} · TutorMatch{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/bookings.css' %}">
+<h1>{{ heading }}</h1>
+<p class="sub">with {{ tutor.full_name }}{% if tutor.hourly_rate %} · ₱{{ tutor.hourly_rate }} per hour{% endif %}</p>
+<form method="post" class="panel form-narrow" style="margin-top:20px" novalidate>{% csrf_token %}
+  {% for e in form.non_field_errors %}<div class="msg err" role="alert">{{ e }}</div>{% endfor %}
+  {% include 'partials/field.html' with f=form.subject %}
+  <div class="row"><div>{% include 'partials/field.html' with f=form.date %}</div><div>{% include 'partials/field.html' with f=form.start_time %}</div></div>
+  {% include 'partials/field.html' with f=form.duration %}
+  {% include 'partials/field.html' with f=form.notes %}
+  <div style="display:flex;gap:10px;margin-top:20px"><button class="btn sm" type="submit">{% if booking %}Save changes{% else %}Send request{% endif %}</button>
+  <a class="btn ghost" href="{% if booking %}{% url 'booking_list' %}{% else %}{% url 'tutor_list' %}{% endif %}">Cancel</a></div>
+</form>
+{% endblock %}

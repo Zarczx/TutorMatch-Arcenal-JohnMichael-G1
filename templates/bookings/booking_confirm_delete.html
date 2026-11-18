@@ -1,0 +1,10 @@
+{% extends 'accounts/app_base.html' %}{% load static %}
+{% block title %}Delete booking · TutorMatch{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/bookings.css' %}">
+<h1>Delete booking?</h1>
+<form method="post" class="panel form-narrow" style="margin-top:20px">{% csrf_token %}
+  <p>{{ booking.subject.name }} with {{ booking.tutor.full_name }} on {{ booking.date|date:"D, M j, Y" }} at {{ booking.start_time|time:"g:i A" }}. This can’t be undone.</p>
+  <div style="display:flex;gap:10px;margin-top:20px"><button class="btn sm danger" type="submit">Yes, delete</button><a class="btn ghost" href="{% url 'booking_list' %}">Keep it</a></div>
+</form>
+{% endblock %}

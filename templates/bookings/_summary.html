@@ -1,0 +1,14 @@
+{% load static %}<link rel="stylesheet" href="{% static 'css/bookings.css' %}">
+<div class="stats">
+  <div class="stat"><b>{{ stats.pending }}</b><span>{% if is_tutor %}Requests to review{% else %}Pending requests{% endif %}</span></div>
+  <div class="stat"><b>{{ stats.upcoming }}</b><span>Upcoming sessions</span></div>
+  <div class="stat"><b>{{ stats.completed }}</b><span>Sessions completed</span></div>
+</div>
+<div class="panel"><h3>Upcoming and pending</h3>
+  {% for b in upcoming %}
+  <div class="item"><div>{{ b.subject.name }} · {% if is_tutor %}{{ b.student.full_name }}{% else %}{{ b.tutor.full_name }}{% endif %}
+    <small>{{ b.date|date:"D, M j" }} · {{ b.start_time|time:"g:i A" }}</small></div>
+    <span class="pill st-{{ b.status }}">{{ b.get_status_display }}</span></div>
+  {% empty %}<p class="sub" style="margin:0">Nothing scheduled yet.</p>{% endfor %}
+  <p style="margin:14px 0 0"><a href="{% url 'booking_list' %}">View all bookings →</a></p>
+</div>

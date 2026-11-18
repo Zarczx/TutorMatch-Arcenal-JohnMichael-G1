@@ -11,6 +11,13 @@
     <a href="{% url 'tutor_list' %}" class="{% if page == 'tutor_list' %}on{% endif %}">Find tutors</a>
     {% endif %}
     <a href="{% url 'profile' %}" class="{% if page == 'profile' or page == 'profile_edit' %}on{% endif %}">My profile</a>
+        {% if user.role == 'tutor' %}
+    <a href="{% url 'booking_list' %}" class="{% if page == 'booking_list' %}on{% endif %}">Booking requests</a>
+    <a href="{% url 'my_subjects' %}" class="{% if page == 'my_subjects' %}on{% endif %}">My subjects</a>
+    {% else %}
+    <a href="{% url 'tutor_list' %}" class="{% if page == 'tutor_list' or page == 'booking_create' %}on{% endif %}">Find tutors</a>
+    <a href="{% url 'booking_list' %}" class="{% if page == 'booking_list' or page == 'booking_update' or page == 'booking_delete' %}on{% endif %}">My bookings</a>
+    {% endif %}
     <form method="post" action="{% url 'logout' %}">{% csrf_token %}<button class="lo" type="submit">Log out</button></form>
     <div class="who"><b>{{ user.full_name }}</b><span class="pill">{{ user.get_role_display }}</span></div>
   </nav>

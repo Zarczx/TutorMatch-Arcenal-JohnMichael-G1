@@ -1,10 +1,7 @@
-{% extends 'accounts/app_base.html' %}
+{% extends 'accounts/app_base.html' %}{% load booking_tags %}
 {% block title %}Student dashboard · TutorMatch{% endblock %}
 {% block content %}
-<h1>Hi, {{ user.first_name|default:user.username }}</h1><p class="sub">Here’s your learning at a glance.</p>
-<div class="stats"><div class="stat"><b>2</b><span>Upcoming sessions</span></div><div class="stat"><b>+3.5</b><span>Avg. understanding gain</span></div><div class="stat"><b>4</b><span>Sessions completed</span></div></div>
-<div class="panel"><h3>Upcoming sessions</h3>
-<div class="item"><div>Data Structures with Carlo R.<small>Sat, Jan 23 · 2:00 PM</small></div><span class="pill">Confirmed</span></div>
-<div class="item"><div>Discrete Math with Ana L.<small>Mon, Jan 25 · 4:30 PM</small></div><span class="pill">Pending</span></div></div>
-<div class="panel"><h3>Find a tutor</h3><p class="sub" style="margin:0">Search by subject and book a session. This arrives in the next phase.</p></div>
+<h1>Hi, {{ user.first_name|default:user.username }}</h1><p class="sub">Find a tutor and keep track of your sessions.</p>
+{% booking_summary %}
+<div class="panel"><h3>Need help with a subject?</h3><p class="sub" style="margin:0 0 14px">Search tutors by subject and send a booking request.</p><a class="btn sm" href="{% url 'tutor_list' %}">Find a tutor</a></div>
 {% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'accounts/app_base.html' %}{% load static %}
+{% block title %}Bookings · TutorMatch{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/bookings.css' %}">
+<h1>{% if user.role == 'tutor' %}Booking requests{% else %}My bookings{% endif %}</h1>
+<p class="sub">{% if user.role == 'tutor' %}Confirm or decline sessions students request.{% else %}Track your requests and sessions.{% endif %}</p>
+<div class="tabs"><a href="{% url 'booking_list' %}" class="{% if not status %}on{% endif %}">All</a>
+  {% for value, label in statuses %}<a href="?status={{ value }}" class="{% if status == value %}on{% endif %}">{{ label }}</a>{% endfor %}</div>
+{% for b in bookings %}
+<div class="panel booking">
+  <div>
+    <h3>{{ b.subject.name }}</h3>
+    <p>{% if user.role == 'tutor' %}Student: {{ b.student.full_name }}{% else %}Tutor: {{ b.tutor.full_name }}{% endif %}</p>
+    <p>{{ b.date|date:"D, M j, Y" }} · {{ b.start_time|time:"g:i A" }} – {{ b.end_time|time:"g:i A" }}</p>
+    {% if b.notes %}<p class="notes">“{{ b.notes }}”</p>{% endif %}
+  </div>
+  <div class="b-side">
+    <span class="pill st-{{ b.status }}">{{ b.get_status_display }}</span>
+    <div class="b-actions">
+    {% if user.role == 'tutor' %}
+      {% if b.status == 'pending' %}
+        <form method="post" action="{% url 'booking_respond' b.pk %}">{% csrf_token %}<input type="hidden" name="action" value="confirm"><button class="btn sm" type="submit">Confirm</button></form>
+        <form method="post" action="{% url 'booking_respond' b.pk %}">{% csrf_token %}<input type="hidden" name="action" value="decline"><button class="btn ghost" type="submit">Decline</button></form>
+      {% endif %}
+      {% if b.can_complete %}<form method="post" action="{% url 'booking_complete' b.pk %}">{% csrf_token %}<button class="btn sm" type="submit">Mark completed</button></form>{% endif %}
+    {% else %}
+      {% if b.can_edit %}<a class="btn ghost" href="{% url 'booking_update' b.pk %}">Edit</a>{% endif %}
+      {% if b.can_cancel %}<form method="post" action="{% url 'booking_cancel' b.pk %}">{% csrf_token %}<button class="btn ghost" type="submit">Cancel</button></form>{% endif %}
+      {% if b.can_delete %}<a class="btn ghost danger" href="{% url 'booking_delete' b.pk %}">Delete</a>{% endif %}
+    {% endif %}
+    </div>
+  </div>
+</div>
+{% empty %}
+<div class="panel empty">{% if user.role == 'tutor' %}No requests yet.{% else %}No bookings yet. <a href="{% url 'tutor_list' %}">Find a tutor</a> to get started.{% endif %}</div>
+{% endfor %}
+{% endblock %}

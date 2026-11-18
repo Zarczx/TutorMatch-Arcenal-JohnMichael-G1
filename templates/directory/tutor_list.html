@@ -1,0 +1,28 @@
+{% extends 'accounts/app_base.html' %}{% load static %}
+{% block title %}Find tutors · TutorMatch{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/directory.css' %}">
+<h1>Find a tutor</h1><p class="sub">Search by subject, then send a booking request.</p>
+<form method="get" class="filters">
+  <input name="q" value="{{ q }}" placeholder="Search name or topic" aria-label="Search">
+  <select name="subject" aria-label="Subject"><option value="">All subjects</option>
+    {% for s in subjects %}<option value="{{ s.pk }}" {% if subject_id == s.pk|stringformat:"s" %}selected{% endif %}>{{ s.name }}</option>{% endfor %}</select>
+  <select name="sort" aria-label="Sort"><option value="name">Sort: Name</option><option value="rate" {% if sort == 'rate' %}selected{% endif %}>Sort: Lowest rate</option></select>
+  <button class="btn sm" type="submit">Search</button>
+</form>
+{% for t in tutors %}
+<div class="panel tutor">
+  {% if t.photo %}<img class="avatar sm" src="{{ t.photo.url }}" alt="">{% else %}<div class="avatar sm" aria-hidden="true">{{ t.initials }}</div>{% endif %}
+  <div class="tutor-info">
+    <h3>{{ t.full_name }}</h3>
+    <div class="rate">{% if t.hourly_rate %}₱{{ t.hourly_rate }} per hour{% else %}Rate not set{% endif %}</div>
+    <div class="chips">{% for s in t.teaches.all %}<span class="pill">{{ s.name }}</span>{% empty %}<span class="rate">No subjects listed yet</span>{% endfor %}</div>
+    {% if t.bio %}<p class="bio">{{ t.bio|truncatechars:140 }}</p>{% endif %}
+  </div>
+  {% url 'booking_create' t.pk as book_url %}
+  {% if book_url and t.teaches.all %}<a class="btn sm" href="{{ book_url }}{% if subject_id %}?subject={{ subject_id }}{% endif %}">Book a session</a>{% endif %}
+</div>
+{% empty %}
+<div class="panel empty">No tutors match your search. Try a different subject or keyword.</div>
+{% endfor %}
+{% endblock %}
